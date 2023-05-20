@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """A module for web application deployment with Fabric."""
 import os
 from datetime import datetime
@@ -27,3 +28,23 @@ def do_pack():
     except Exception:
         output = None
     return output
+=======
+from fabric.api import local
+from time import strftime
+from datetime import date
+
+
+def do_pack():
+    """ A script that make archive the contents of web_static folder"""
+
+    filename = strftime("%Y%m%d%H%M%S")
+    try:
+        local("mkdir -p versions")
+        local("tar -czvf versions/web_static_{}.tgz web_static/"
+              .format(filename))
+
+        return "versions/web_static_{}.tgz".format(filename)
+
+    except Exception as e:
+        return None
+>>>>>>> 02f28de52063466cb84066a65ce3db9b06146bc5

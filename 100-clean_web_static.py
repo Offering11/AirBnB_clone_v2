@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """A module for web application deployment with Fabric."""
 import os
 from datetime import datetime
@@ -90,3 +91,24 @@ def do_clean(number=0):
         " | sort -r | tr '\\n' ' ' | cut -d ' ' -f{}-)".format(start + 1)
     ]
     run(''.join(cmd_parts))
+=======
+import os
+from fabric.api import *
+
+env.hosts = ['52.5.50.233','34.207.63.235']
+
+def do_clean(number=0):
+
+    number = 1 if int(number) == 0 else int(number)
+
+    archives = sorted(os.listdir("versions"))
+    [archives.pop() for i in range(number)]
+    with lcd("versions"):
+        [local("rm ./{}".format(a)) for a in archives]
+
+    with cd("/data/web_static/releases"):
+        archives = run("ls -tr").split()
+        archives = [a for a in archives if "web_static_" in a]
+        [archives.pop() for i in range(number)]
+        [run("rm -rf ./{}".format(a)) for a in archives]
+>>>>>>> 02f28de52063466cb84066a65ce3db9b06146bc5
